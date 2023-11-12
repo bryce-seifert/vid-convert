@@ -4,7 +4,7 @@ function fadeDragZone(state) {
 	let zone = document.getElementById('drag-zone')
 
 	if (state && zone) {
-		zone.style.opacity = '.7'
+		zone.style.opacity = '.9'
 		zone.style.transition = '.5s'
 	} else {
 		zone.style.opacity = '0'
@@ -33,6 +33,8 @@ document.addEventListener('dragenter', (e) => {
 })
 
 document.addEventListener('drop', (event) => {
+	fadeDragZone(false)
+
 	event.preventDefault()
 	event.stopPropagation()
 

@@ -1,4 +1,4 @@
-const { app, dialog, Notification, ipcMain, BrowserWindow } = require('electron')
+const { app, dialog, Notification, ipcMain, BrowserWindow, webContents } = require('electron')
 const path = require('node:path')
 const fs = require('fs')
 const homeDir = require('os').homedir()
@@ -34,6 +34,11 @@ function createWindow() {
 		}
 	}
 }
+
+app.on('open-file', function (event, filePath) {
+	event.preventDefault()
+	findFiles(filePath)
+})
 
 app.whenReady().then(() => {
 	createWindow()
@@ -143,6 +148,7 @@ function convert(path) {
 		})
 }
 
-require('electron-reload')(__dirname, {
+/* require('electron-reload')(__dirname, {
 	electron: require(`${__dirname}/node_modules/electron`),
 })
+ */

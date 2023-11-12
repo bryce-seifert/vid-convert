@@ -21,6 +21,16 @@
 						"arm64"
 					]
 				}
+			],
+			"fileAssociations": [
+				{
+					"ext": [
+						"mp4",
+						"mov"
+					],
+					"description": "Movie files",
+					"role": "Viewer"
+				}
 			]
 		}
 	},

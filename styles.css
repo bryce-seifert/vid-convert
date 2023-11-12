@@ -9,17 +9,35 @@ body {
   background: linear-gradient(0deg, rgba(97,14,117,1) 0%, rgba(105,37,172,1) 58%);
 }
 h1 {
-  padding-top: 125px;
+  padding-top: 175px;
 }
 button {
   -webkit-app-region: no-drag;
 }
 #drag-zone {
   height: 400px;
-  width: 400px;
+  width: 420px;
   position: absolute;
   top: 0;
   left: 0;
   background-color: black;
+  background-image: url(./assets/down-arrow.png);
+  background-repeat: no-repeat;
+  background-size: 35%;
+  background-position: 50% 50%;
   opacity: 0;
+}
+.version {
+  opacity: 0.3;
+  position: absolute;
+  bottom: -10px;
+  right: 5px;
+}
+.logo {
+  height: 40%;
+  width: 40%;
+  position: absolute;
+  top: 40px;
+  left:120px;
+  opacity: 1;
 }
