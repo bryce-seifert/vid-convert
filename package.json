@@ -1,0 +1,42 @@
+{
+	"name": "folder-convert",
+	"version": "1.0.0",
+	"description": "A simple, no-frills video converter",
+	"main": "main.js",
+	"author": "Bryce Seifert",
+	"scripts": {
+		"start": "electron .",
+		"pack": "electron-builder --dir",
+		"dist": "electron-builder"
+	},
+	"build": {
+		"appId": "com.bryce-seifert.folder-convert",
+		"asar": false,
+		"mac": {
+			"category": "public.app-category.video",
+			"target": [
+				{
+					"target": "pkg",
+					"arch": [
+						"arm64"
+					]
+				}
+			]
+		}
+	},
+	"repository": "https://github.com/",
+	"keywords": [
+		"folder",
+		"convert",
+		"video"
+	],
+	"devDependencies": {
+		"electron": "^27.0.4",
+		"electron-builder": "^24.6.4"
+	},
+	"dependencies": {
+		"electron-reload": "^2.0.0-alpha.1",
+		"ffmpeg-static": "^5.2.0",
+		"fluent-ffmpeg": "^2.1.2"
+	}
+}

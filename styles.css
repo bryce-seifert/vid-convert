@@ -1,0 +1,26 @@
+body {
+  -webkit-app-region: drag;
+  width: 400px;
+  height: 400px;
+  color: white;
+  font-family: "DIN Alternate", sans-serif;
+  text-align: center;
+  background: rgb(97,14,117);
+  background: linear-gradient(0deg, rgba(97,14,117,1) 0%, rgba(105,37,172,1) 58%);
+}
+h1 {
+  padding-top: 125px;
+}
+button {
+  -webkit-app-region: no-drag;
+}
+#drag-zone {
+  height: 100px;
+  width: 100px;
+  background-color: black;
+  -webkit-app-region: no-drag;
+
+}
+
+
+  
