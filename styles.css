@@ -15,12 +15,11 @@ button {
   -webkit-app-region: no-drag;
 }
 #drag-zone {
-  height: 100px;
-  width: 100px;
+  height: 400px;
+  width: 400px;
+  position: absolute;
+  top: 0;
+  left: 0;
   background-color: black;
-  -webkit-app-region: no-drag;
-
+  opacity: 0;
 }
-
-
-  

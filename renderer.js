@@ -1,7 +1,27 @@
 const { ipcRenderer } = require('electron')
 
+function fadeDragZone(state) {
+	let zone = document.getElementById('drag-zone')
+
+	if (state && zone) {
+		zone.style.opacity = '.7'
+		zone.style.transition = '.5s'
+	} else {
+		zone.style.opacity = '0'
+		zone.style.transition = '.5s'
+	}
+}
+
 document.addEventListener('dragover', (e) => {
-	//ipcRenderer.send("test", "test")
+	fadeDragZone(true)
+
+	e.preventDefault()
+	e.stopPropagation()
+})
+
+document.addEventListener('dragleave', (e) => {
+	fadeDragZone(false)
+
 	e.preventDefault()
 	e.stopPropagation()
 })
@@ -25,7 +45,9 @@ document.addEventListener('drop', (event) => {
 	ipcRenderer.send('dropped-file', pathArr)
 })
 
-ipcRenderer.on('test-message', function (evt, message) {
-	const element = document.getElementById('drag-zone')
-	if (element) element.style.color = 'red'
+ipcRenderer.on('test', (event, data) => {
+	console.log('test')
+	let el = document.getElementById('drag-zone')
+	el.style.color = 'red'
+	console.log('test')
 })
