@@ -110,8 +110,24 @@ function findFiles(path) {
 	checkFolder(path)
 }
 
+function adjustBadgeCount(adjust) {
+	let current = app.getBadgeCount()
+	if (current >= 0) {
+		if (adjust) {
+			app.setBadgeCount(current + 1)
+		} else {
+			app.setBadgeCount(current - 1)
+		}
+	} else {
+		app.setBadgeCount(0)
+	}
+}
+
 function convert(path) {
-	let fileName = path.substring(path.lastIndexOf('/') + 1).replace('.mp4', '')
+	let fileName = path.substring(path.lastIndexOf('/') + 1)
+	fileName = fileName.substring(0, fileName.lastIndexOf('.'))
+
+	adjustBadgeCount(true)
 
 	ffmpeg()
 		// Input file
@@ -128,7 +144,7 @@ function convert(path) {
 		.on('progress', (progress) => {
 			if (progress?.percent) {
 				// console.log(`Processing: ${Math.floor(progress.percent)}% done`)
-				this.progressLoad(Math.floor(progress.percent))
+				progressLoad(Math.floor(progress.percent))
 			}
 		})
 
@@ -137,18 +153,19 @@ function convert(path) {
 
 		.on('end', () => {
 			console.log('FFmpeg has finished.')
-			this.progressLoad(-1)
+			progressLoad(-1)
 
 			showNotification('Folder Convert', `${fileName} is converted`)
+			adjustBadgeCount(false)
 		})
 
 		.on('error', (error) => {
 			showNotification('Folder Convert', `${error}`)
+			adjustBadgeCount(false)
 			console.error(error)
 		})
 }
 
 /* require('electron-reload')(__dirname, {
 	electron: require(`${__dirname}/node_modules/electron`),
-})
- */
+}) */

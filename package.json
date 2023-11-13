@@ -26,9 +26,12 @@
 				{
 					"ext": [
 						"mp4",
-						"mov"
+						"mov",
+						"avi",
+						"webm",
+						"flv"
 					],
-					"description": "Movie files",
+					"description": "Video files",
 					"role": "Viewer"
 				}
 			]
