@@ -137,9 +137,20 @@ function convert(path) {
 		.size('1920x?')
 		.aspect('16:9')
 		.format('mp4')
+		.videoBitrate('5000k')
+		.outputOptions([
+			'-crf 18',
+			'-profile:v high',
+			'-level:v 4.1',
+		  ])
+		.videoFilters('format=yuv420p')
 
 		// Audio
-		.outputOptions('-ab', '192k')
+		.outputOptions([
+			'-ab 192k',
+			'-ac 2',
+			'-ar 48000',
+		  ])
 
 		.on('progress', (progress) => {
 			if (progress?.percent) {
@@ -166,6 +177,6 @@ function convert(path) {
 		})
 }
 
-require('electron-reload')(__dirname, {
+/*  require('electron-reload')(__dirname, {
 	electron: require(`${__dirname}/node_modules/electron`),
-})
+}) */
