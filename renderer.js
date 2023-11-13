@@ -1,8 +1,8 @@
 const { ipcRenderer } = require('electron')
 
-function fadeDragZone(state) {
+function triggerDragZone(state) {
 	let zone = document.getElementById('drag-zone')
-
+	let logo = document.getElementById('logo')
 	if (state && zone) {
 		zone.style.opacity = '.9'
 		zone.style.transition = '.5s'
@@ -10,17 +10,52 @@ function fadeDragZone(state) {
 		zone.style.opacity = '0'
 		zone.style.transition = '.5s'
 	}
+	if (state && logo) {
+		logo.style.top = '90px'
+		logo.style.left = '110px'
+		logo.style.backgroundSize = '50%'
+		logo.style.transition = '.5s'
+	} else {
+		logo.style.top = '40px'
+		logo.style.left = '125px'
+		logo.style.backgroundSize = '40%'
+		logo.style.transition = '.5s'
+	}
+}
+
+function triggerConfirmZone(state) {
+	let zone = document.getElementById('confirm-zone')
+	let logo = document.getElementById('logo')
+	if (state && zone) {
+		zone.style.opacity = '.9'
+		zone.style.transition = '.5s'
+	}
+	if (state && logo) {
+		logo.style.top = '60px'
+		logo.style.left = '60px'
+		logo.style.backgroundSize = '70%'
+		logo.style.transition = '1s'
+	}
+
+	setTimeout(function () {
+		zone.style.opacity = '0'
+		zone.style.transition = '.5s'
+		logo.style.top = '40px'
+		logo.style.left = '125px'
+		logo.style.backgroundSize = '40%'
+		logo.style.transition = '.5s'
+	}, 1000)
 }
 
 document.addEventListener('dragover', (e) => {
-	fadeDragZone(true)
+	triggerDragZone(true)
 
 	e.preventDefault()
 	e.stopPropagation()
 })
 
 document.addEventListener('dragleave', (e) => {
-	fadeDragZone(false)
+	triggerDragZone(false)
 
 	e.preventDefault()
 	e.stopPropagation()
@@ -33,8 +68,8 @@ document.addEventListener('dragenter', (e) => {
 })
 
 document.addEventListener('drop', (event) => {
-	fadeDragZone(false)
-
+	triggerDragZone(false)
+	triggerConfirmZone(true)
 	event.preventDefault()
 	event.stopPropagation()
 

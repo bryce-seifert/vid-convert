@@ -1,23 +1,24 @@
 {
-	"name": "folder-convert",
-	"version": "1.0.0",
+	"name": "vid-convert",
+	"version": "0.0.1",
 	"description": "A simple, no-frills video converter",
 	"main": "main.js",
 	"author": "Bryce Seifert",
 	"scripts": {
 		"start": "electron .",
-		"pack": "electron-builder --dir",
 		"dist": "electron-builder"
 	},
 	"build": {
-		"appId": "com.bryce-seifert.folder-convert",
+		"appId": "com.bryce-seifert.vide-convert",
+		"productName": "Vid Convert",
 		"asar": false,
 		"mac": {
 			"category": "public.app-category.video",
 			"target": [
 				{
-					"target": "pkg",
+					"target": "dmg",
 					"arch": [
+						"x64",
 						"arm64"
 					]
 				}
@@ -39,9 +40,8 @@
 	},
 	"repository": "https://github.com/",
 	"keywords": [
-		"folder",
-		"convert",
-		"video"
+		"video",
+		"convert"
 	],
 	"devDependencies": {
 		"electron": "^27.0.4",

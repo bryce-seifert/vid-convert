@@ -1,4 +1,4 @@
-const { app, dialog, Notification, ipcMain, BrowserWindow, webContents } = require('electron')
+const { app, Notification, ipcMain, BrowserWindow, webContents } = require('electron')
 const path = require('node:path')
 const fs = require('fs')
 const homeDir = require('os').homedir()
@@ -9,7 +9,7 @@ const ffmpeg = require('fluent-ffmpeg')
 ffmpeg.setFfmpegPath(ffmpegStatic)
 
 function createWindow() {
-	const mainWindow = new BrowserWindow({
+	this.mainWindow = new BrowserWindow({
 		width: 400,
 		height: 400,
 		titleBarStyle: 'hidden',
@@ -22,17 +22,8 @@ function createWindow() {
 			nodeIntegration: true,
 		},
 	})
-	//mainWindow.webContents.openDevTools()
-	mainWindow.loadFile('index.html')
-
-	progressLoad = (percent) => {
-		let completion = percent / 100
-		if (completion) {
-			mainWindow.setProgressBar(completion)
-		} else {
-			mainWindow.setProgressBar(-1)
-		}
-	}
+	//this.mainWindow.webContents.openDevTools()
+	this.mainWindow.loadFile('index.html')
 }
 
 app.on('open-file', function (event, filePath) {
@@ -75,6 +66,15 @@ function createConvertedFolder() {
 
 function showNotification(title, message) {
 	new Notification({ title: title, body: message }).show()
+}
+
+function progressLoad(percent) {
+	let completion = percent / 100
+	if (completion) {
+		this.mainWindow.setProgressBar(completion)
+	} else {
+		this.mainWindow.setProgressBar(-1)
+	}
 }
 
 function checkFolder(path) {
@@ -155,17 +155,17 @@ function convert(path) {
 			console.log('FFmpeg has finished.')
 			progressLoad(-1)
 
-			showNotification('Folder Convert', `${fileName} is converted`)
+			showNotification('Vid Convert', `${fileName} is converted`)
 			adjustBadgeCount(false)
 		})
 
 		.on('error', (error) => {
-			showNotification('Folder Convert', `${error}`)
+			showNotification('Vid Convert', `${error}`)
 			adjustBadgeCount(false)
 			console.error(error)
 		})
 }
 
-/* require('electron-reload')(__dirname, {
+require('electron-reload')(__dirname, {
 	electron: require(`${__dirname}/node_modules/electron`),
-}) */
+})
