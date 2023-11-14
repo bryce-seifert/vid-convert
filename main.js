@@ -134,23 +134,14 @@ function convert(path) {
 		.input(path)
 
 		//Video
-		.size('1920x?')
-		.aspect('16:9')
 		.format('mp4')
 		.videoBitrate('5000k')
-		.outputOptions([
-			'-crf 18',
-			'-profile:v high',
-			'-level:v 4.1',
-		  ])
-		.videoFilters('format=yuv420p')
+		.fps('29.97')
+		.outputOptions(['-crf 18', '-profile:v high', '-level:v 4.1'])
+		.videoFilters(['format=yuv420p', `scale='min(1920,iw)':-1`])
 
 		// Audio
-		.outputOptions([
-			'-ab 192k',
-			'-ac 2',
-			'-ar 48000',
-		  ])
+		.outputOptions(['-ab 192k', '-ac 2', '-ar 48000'])
 
 		.on('progress', (progress) => {
 			if (progress?.percent) {
