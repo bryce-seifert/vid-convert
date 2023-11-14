@@ -54,10 +54,6 @@ ipcMain.on('dropped-file', (event, arg) => {
 	}
 })
 
-ipcMain.on('test', (event, arg) => {
-	console.log(arg)
-})
-
 function createConvertedFolder() {
 	fs.mkdir(`${desktopDir}/converted`, { recursive: true }, (err) => {
 		if (err) throw err

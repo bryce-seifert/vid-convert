@@ -62,7 +62,6 @@ document.addEventListener('dragleave', (e) => {
 })
 
 document.addEventListener('dragenter', (e) => {
-	//ipcRenderer.send("test", "test")
 	e.preventDefault()
 	e.stopPropagation()
 })
@@ -80,11 +79,4 @@ document.addEventListener('drop', (event) => {
 	}
 
 	ipcRenderer.send('dropped-file', pathArr)
-})
-
-ipcRenderer.on('test', (event, data) => {
-	console.log('test')
-	let el = document.getElementById('drag-zone')
-	el.style.color = 'red'
-	console.log('test')
 })
