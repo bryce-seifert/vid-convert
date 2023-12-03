@@ -15,6 +15,10 @@
 		"asar": false,
 		"mac": {
 			"category": "public.app-category.video",
+			"hardenedRuntime": true,
+			"gatekeeperAssess": false,
+			"entitlements": "build/entitlements.mac.plist",
+			"entitlementsInherit": "build/entitlements.mac.plist",
 			"target": [
 				{
 					"target": "dmg",
@@ -36,7 +40,8 @@
 					"role": "Viewer"
 				}
 			]
-		}
+		},
+		"afterSign": "scripts/notarize.js"
 	},
 	"repository": "https://github.com/",
 	"keywords": [
@@ -48,6 +53,7 @@
 		"electron-builder": "^24.6.4"
 	},
 	"dependencies": {
+		"electron-notarize": "^1.2.2",
 		"electron-reload": "^2.0.0-alpha.1",
 		"ffmpeg-static": "^5.2.0",
 		"fluent-ffmpeg": "^2.1.2"

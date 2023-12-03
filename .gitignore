@@ -3,3 +3,4 @@
 /design
 .DS_Store
 package-lock.json
+.env
