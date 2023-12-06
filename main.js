@@ -1,4 +1,5 @@
 const { app, Notification, ipcMain, BrowserWindow, webContents } = require('electron')
+const { autoUpdater } = require('electron-updater')
 const path = require('node:path')
 const fs = require('fs')
 const homeDir = require('os').homedir()
@@ -33,10 +34,14 @@ app.on('open-file', function (event, filePath) {
 
 app.whenReady().then(() => {
 	createWindow()
+	autoUpdater.checkForUpdatesAndNotify()
 
 	app.on('activate', function () {
 		if (BrowserWindow.getAllWindows().length === 0) createWindow()
 	})
+})
+autoUpdater.on('error', (error) => {
+	new Notification({ title: 'Update Error', body: String(error) }).show()
 })
 
 app.on('window-all-closed', function () {
