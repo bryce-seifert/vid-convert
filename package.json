@@ -12,7 +12,7 @@
 		"start": "electron .",
 		"dist": "electron-builder",
 		"dist-x64": "rm -rf ./app/node_modules && npm install && electron-builder build --mac pkg --x64",
-		"publish": "electron-builder --p onTagOrDraft"
+		"publish": "electron-builder --p"
 	},
 	"build": {
 		"appId": "com.bryce-seifert.video-convert",
