@@ -23,6 +23,14 @@ function triggerDragZone(state) {
 	}
 }
 
+const version = document.getElementById('version')
+
+ipcRenderer.send('app_version')
+ipcRenderer.on('app_version', (event, arg) => {
+	ipcRenderer.removeAllListeners('app_version')
+	version.innerText = 'v' + arg.version
+})
+
 function triggerConfirmZone(state) {
 	let zone = document.getElementById('confirm-zone')
 	let logo = document.getElementById('logo')

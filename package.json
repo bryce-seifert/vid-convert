@@ -1,6 +1,6 @@
 {
 	"name": "vid-convert",
-	"version": "0.0.14",
+	"version": "0.0.18",
 	"description": "A simple, no-frills video converter",
 	"main": "main.js",
 	"author": "Bryce Seifert",

@@ -1,4 +1,4 @@
-const { app, Notification, ipcMain, BrowserWindow, webContents } = require('electron')
+const { app, Notification, ipcMain, BrowserWindow, Menu, webContents } = require('electron')
 const { autoUpdater } = require('electron-updater')
 const path = require('node:path')
 const fs = require('fs')
@@ -9,10 +9,14 @@ const ffmpegStatic = require('ffmpeg-static')
 const ffmpeg = require('fluent-ffmpeg')
 ffmpeg.setFfmpegPath(ffmpegStatic)
 
+let manualCheck = false
+
 function createWindow() {
 	this.mainWindow = new BrowserWindow({
 		width: 400,
 		height: 400,
+		show: false,
+		transparent: true,
 		titleBarStyle: 'hidden',
 		resizable: false,
 		maximizable: false,
@@ -24,12 +28,20 @@ function createWindow() {
 		},
 	})
 	//this.mainWindow.webContents.openDevTools()
+
 	this.mainWindow.loadFile('index.html')
+	this.mainWindow.webContents.once('ready-to-show', () => {
+		this.mainWindow.show()
+	})
 }
 
 app.on('open-file', function (event, filePath) {
 	event.preventDefault()
 	findFiles(filePath)
+})
+
+app.on('window-all-closed', function () {
+	app.quit()
 })
 
 app.whenReady().then(() => {
@@ -39,13 +51,57 @@ app.whenReady().then(() => {
 	app.on('activate', function () {
 		if (BrowserWindow.getAllWindows().length === 0) createWindow()
 	})
+
+	//Custom menu
+	const template = [
+		{
+			label: app.name,
+			submenu: [
+				{
+					label: 'Check for Updates...',
+					click() {
+						manualCheck = true
+						autoUpdater.checkForUpdatesAndNotify()
+					},
+				},
+				{ type: 'separator' },
+				{ role: 'services' },
+				{ type: 'separator' },
+				{ role: 'hide' },
+				{ role: 'hideOthers' },
+				{ role: 'unhide' },
+				{ type: 'separator' },
+				{ role: 'quit' },
+			],
+		},
+	]
+	Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 })
+
+//Auto Updater
 autoUpdater.on('error', (error) => {
 	new Notification({ title: 'Update Error', body: String(error) }).show()
 })
 
-app.on('window-all-closed', function () {
-	app.quit()
+autoUpdater.on('checking-for-update', () => {
+	if (manualCheck) {
+		new Notification({
+			title: 'Checking for Updates',
+			body: 'A newer version of the app will be downloaded if available',
+		}).show()
+	}
+})
+
+autoUpdater.on('update-not-available', () => {
+	if (manualCheck) {
+		new Notification({ title: 'No Updates Available', body: 'You are using the most recent version' }).show()
+		this.manualCheck = false
+	}
+})
+
+//App Version
+ipcMain.on('app_version', (event) => {
+	event.sender.send('app_version', { version: app.getVersion() })
 })
 
 ipcMain.on('dropped-file', (event, arg) => {
