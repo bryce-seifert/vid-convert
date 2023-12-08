@@ -211,7 +211,7 @@ function convert(path) {
 		})
 
 		.on('error', (error) => {
-			showNotification('Vid Convert', `${error}`)
+			showNotification('Conversion Error', `${error}`)
 			adjustBadgeCount(false)
 			console.error(error)
 		})
