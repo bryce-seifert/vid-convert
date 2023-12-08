@@ -11,7 +11,8 @@ body {
   overflow-y: hidden;
 }
 h1 {
-  padding-top: 175px;
+  padding-top: 200px;
+  margin-bottom: 10px;
 }
 button {
   -webkit-app-region: no-drag;
@@ -46,7 +47,7 @@ button {
   opacity: 0.3;
   position: absolute;
   bottom: -10px;
-  right: 5px;
+  right: 10px;
 }
 #logo {
   height: 100%;
@@ -55,7 +56,7 @@ button {
   background-size: 40%;
   background-repeat: no-repeat;
   position: absolute;
-  top: 40px;
+  top: 60px;
   left:125px;
   opacity: 1; 
 }

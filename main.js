@@ -80,21 +80,18 @@ app.whenReady().then(() => {
 
 //Auto Updater
 autoUpdater.on('error', (error) => {
-	new Notification({ title: 'Update Error', body: String(error) }).show()
+	showNotification('Update Error', String(error))
 })
 
 autoUpdater.on('checking-for-update', () => {
 	if (manualCheck) {
-		new Notification({
-			title: 'Checking for Updates',
-			body: 'A newer version of the app will be downloaded if available',
-		}).show()
+		showNotification('Checking for Updates', 'A newer version of the app will be downloaded if available')
 	}
 })
 
 autoUpdater.on('update-not-available', () => {
 	if (manualCheck) {
-		new Notification({ title: 'No Updates Available', body: 'You are using the most recent version' }).show()
+		showNotification('No Updates Available', 'You are using the most recent version')
 		this.manualCheck = false
 	}
 })
@@ -105,11 +102,10 @@ ipcMain.on('app_version', (event) => {
 })
 
 ipcMain.on('dropped-file', (event, arg) => {
-	console.log('Dropped File(s):', arg)
+	//console.log('Dropped File(s):', arg)
 
 	if (arg.length) {
 		arg.forEach((file) => {
-			console.log(file)
 			findFiles(file)
 		})
 	}
@@ -143,13 +139,11 @@ function checkFolder(path) {
 			return
 		}
 		if (stats.isFile()) {
-			console.log('File')
 			convert(path)
 		} else if (stats.isDirectory()) {
-			console.log('Directory')
 			fs.readdir(path, function (err, files) {
 				if (err) {
-					return console.log('Unable to scan directory: ' + err)
+					return showNotification('Conversion Error', `Unable to scan directory: ${err}`)
 				}
 
 				files.forEach(function (file) {
@@ -157,7 +151,7 @@ function checkFolder(path) {
 				})
 			})
 		} else {
-			console.log('Unknown file type')
+			showNotification('Conversion Error', `Unknown file type`)
 		}
 	})
 }
@@ -202,7 +196,6 @@ function convert(path) {
 
 		.on('progress', (progress) => {
 			if (progress?.percent) {
-				// console.log(`Processing: ${Math.floor(progress.percent)}% done`)
 				progressLoad(Math.floor(progress.percent))
 			}
 		})
@@ -211,7 +204,6 @@ function convert(path) {
 		.saveToFile(`${desktopDir}/converted/${fileName}.mp4`)
 
 		.on('end', () => {
-			console.log('FFmpeg has finished.')
 			progressLoad(-1)
 
 			showNotification('Vid Convert', `${fileName} is converted`)
@@ -225,6 +217,6 @@ function convert(path) {
 		})
 }
 
-/*   require('electron-reload')(__dirname, {
+require('electron-reload')(__dirname, {
 	electron: require(`${__dirname}/node_modules/electron`),
-})  */
+})

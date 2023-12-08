@@ -1,5 +1,14 @@
 const { ipcRenderer } = require('electron')
 
+//App Version Text
+const version = document.getElementById('version')
+ipcRenderer.send('app_version')
+ipcRenderer.on('app_version', (event, arg) => {
+	ipcRenderer.removeAllListeners('app_version')
+	version.innerText = 'v' + arg.version
+})
+
+//Drag/Drop Animation
 function triggerDragZone(state) {
 	let zone = document.getElementById('drag-zone')
 	let logo = document.getElementById('logo')
@@ -16,20 +25,12 @@ function triggerDragZone(state) {
 		logo.style.backgroundSize = '50%'
 		logo.style.transition = '.5s'
 	} else {
-		logo.style.top = '40px'
+		logo.style.top = '60px'
 		logo.style.left = '125px'
 		logo.style.backgroundSize = '40%'
 		logo.style.transition = '.5s'
 	}
 }
-
-const version = document.getElementById('version')
-
-ipcRenderer.send('app_version')
-ipcRenderer.on('app_version', (event, arg) => {
-	ipcRenderer.removeAllListeners('app_version')
-	version.innerText = 'v' + arg.version
-})
 
 function triggerConfirmZone(state) {
 	let zone = document.getElementById('confirm-zone')
@@ -48,7 +49,7 @@ function triggerConfirmZone(state) {
 	setTimeout(function () {
 		zone.style.opacity = '0'
 		zone.style.transition = '.5s'
-		logo.style.top = '40px'
+		logo.style.top = '60px'
 		logo.style.left = '125px'
 		logo.style.backgroundSize = '40%'
 		logo.style.transition = '.5s'
