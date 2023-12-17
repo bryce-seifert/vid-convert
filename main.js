@@ -121,15 +121,6 @@ function showNotification(title, message) {
 	new Notification({ title: title, body: message }).show()
 }
 
-function progressLoad(percent) {
-	let completion = percent / 100
-	if (completion) {
-		this.mainWindow.setProgressBar(completion)
-	} else {
-		this.mainWindow.setProgressBar(-1)
-	}
-}
-
 function checkFolder(path) {
 	let pathString = String(path)
 
@@ -196,18 +187,12 @@ function convert(path) {
 		// Audio
 		.outputOptions(['-ab 192k', '-ac 2', '-ar 48000'])
 
-		.on('progress', (progress) => {
-			if (progress?.percent) {
-				progressLoad(Math.floor(progress.percent))
-			}
-		})
+		.on('progress', (progress) => {})
 
 		// Output file
 		.saveToFile(`${desktopDir}/converted/${fileName}.mp4`)
 
 		.on('end', () => {
-			progressLoad(-1)
-
 			showNotification('Vid Convert', `${fileName} is converted`)
 			adjustBadgeCount(false)
 		})
