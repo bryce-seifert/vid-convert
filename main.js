@@ -147,7 +147,9 @@ function checkFolder(path) {
 				}
 
 				files.forEach(function (file) {
-					convert(path + '/' + file)
+					if (file !== '.DS_Store') {
+						convert(path + '/' + file)
+					}
 				})
 			})
 		} else {
