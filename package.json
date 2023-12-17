@@ -6,7 +6,7 @@
 	"author": "Bryce Seifert",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/bryce-seifert/vid-convert.git"
+		"url": "git+https://github.com/bryce-seifert/vid-convert.git"
 	},
 	"scripts": {
 		"start": "electron .",
