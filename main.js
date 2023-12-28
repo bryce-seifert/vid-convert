@@ -172,36 +172,39 @@ function convert(path) {
 	fileName = fileName.substring(0, fileName.lastIndexOf('.'))
 
 	adjustBadgeCount(true)
+	try {
+		ffmpeg()
+			// Input file
+			.input(path)
 
-	ffmpeg()
-		// Input file
-		.input(path)
+			//Video
+			.format('mp4')
+			.videoBitrate('5000k')
+			.fps('29.97')
+			.outputOptions(['-crf 18', '-profile:v high', '-level:v 4.1'])
+			.videoFilters(['format=yuv420p', `scale='min(1920,iw)':-1`])
 
-		//Video
-		.format('mp4')
-		.videoBitrate('5000k')
-		.fps('29.97')
-		.outputOptions(['-crf 18', '-profile:v high', '-level:v 4.1'])
-		.videoFilters(['format=yuv420p', `scale='min(1920,iw)':-1`])
+			// Audio
+			.outputOptions(['-ab 192k', '-ac 2', '-ar 48000'])
 
-		// Audio
-		.outputOptions(['-ab 192k', '-ac 2', '-ar 48000'])
+			.on('progress', (progress) => {})
 
-		.on('progress', (progress) => {})
+			// Output file
+			.saveToFile(`${desktopDir}/converted/${fileName}.mp4`)
 
-		// Output file
-		.saveToFile(`${desktopDir}/converted/${fileName}.mp4`)
+			.on('end', () => {
+				showNotification('Vid Convert', `${fileName} is converted`)
+				adjustBadgeCount(false)
+			})
 
-		.on('end', () => {
-			showNotification('Vid Convert', `${fileName} is converted`)
-			adjustBadgeCount(false)
-		})
-
-		.on('error', (error) => {
-			showNotification('Conversion Error', `${error}`)
-			adjustBadgeCount(false)
-			console.error(error)
-		})
+			.on('error', (error) => {
+				showNotification('Conversion Error', `${error}`)
+				adjustBadgeCount(false)
+				console.error(error)
+			})
+	} catch (error) {
+		showNotification('Conversion Error', `${error}`)
+	}
 }
 
 /* require('electron-reload')(__dirname, {

@@ -1,6 +1,6 @@
 {
 	"name": "vid-convert",
-	"version": "0.0.20",
+	"version": "0.0.21",
 	"description": "A simple, no-frills video converter",
 	"main": "main.js",
 	"author": "Bryce Seifert",
@@ -11,7 +11,7 @@
 	"scripts": {
 		"start": "electron .",
 		"dist": "electron-builder",
-		"dist-x64": "rm -rf ./app/node_modules && npm install && electron-builder build --mac pkg --x64",
+		"dist-x64": "rm -rf ./app/node_modules && npm install --arch=x64 && electron-builder build --mac pkg --x64",
 		"publish": "electron-builder --p onTagOrDraft"
 	},
 	"build": {
@@ -56,7 +56,7 @@
 		"convert"
 	],
 	"devDependencies": {
-		"electron": "^28.0.0",
+		"electron": "^28.1.0",
 		"electron-builder": "^24.9.1"
 	},
 	"dependencies": {
